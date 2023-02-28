@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="{% url 'updateprofile' %}" method="post">
+        {% csrf_token %}
+        <div>
+            <label for="first_name">first name</label>
+            <input type="text" name="fname" id="fname">
+        </div>
+        <div>
+            <label for="last_name">last name</label>
+            <input type="text" name="lname" id="lname">
+        </div>
+        <div>
+            <label for="username">username</label>
+            <input type="text" name="username" id="username">
+        </div>
+        <div>
+            <label for="city">city</label>
+            <input type="text" name="city" id="city">
+        </div>
+        <div>
+            <label for="state">state</label>
+            <input type="text" name="state" id="state">
+        </div>
+        <div>
+            <label for="country">country</label>
+            <input type="text" name="country" id="country">
+        </div>
+        <div>
+            <label for="address">address</label>
+            <input type="text" name="address" id="address">
+        </div>
+        <div>
+            <button type="submit">save</button>
+        </div>
+    </form>
+</body>
+</html>

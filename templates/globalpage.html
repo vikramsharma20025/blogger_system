@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .block{
+            max-width: 50%;
+            border: 1px solid black;
+            justify-content: center;
+            display: flex;
+            flex-direction: column;
+            margin-left: 25%;
+        }
+        .container{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border: 1px solid black;
+        }
+        .child-nav{
+            display: none;
+        }
+        .parent-nav{
+            height: 50px;
+        }
+        .parent-nav:hover .child-nav{
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar centre">
+        <a href="{% url 'dashboard' %}">dashboard</a>
+        <div class="parent-nav">
+            <h2>{{ usernameofuser }}</h2>
+            <div class="child-nav">
+              <h2><a href="{% url 'logout' %}">logout</a></h2>
+            </div>
+        </div>
+    </div>
+    <div class="block">
+        {% for i in allposted %}
+        <a href="{% url 'showpost' title=i.title %}">
+            <div class="container">
+                <div class="heading">{{ i.username }} {{ i.timeposted }}</div>
+                <div class="content">
+                    <div class="title">{{ i.title }}</div>
+                    <div class="desc">{{ i.desc }}</div>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+        {% for i in comments %}
+            <div class="container">
+                <div class="heading">{{ i.timeposted }} {{ i.userwhoposted }}</div>
+                <div class="content">
+                    <div class="title">{{ i.content }}</div>
+                    <!-- <div class="desc">{{ i.desc }}</div> -->
+                </div>
+            </div>
+        {% endfor %}
+        
+    </div>
+</body>
+</html>
