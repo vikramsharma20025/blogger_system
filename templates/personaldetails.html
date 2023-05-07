@@ -4,17 +4,149 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Personal info</title>
+    <style>
+        body{
+            background-color: #EFFAD3;
+        }
+        .container-navbar{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #EFFAD3;
+            height: 15vh;
+            padding-left: 15px;
+            padding-right: 15px;
+            color: #28ABB9;
+            
+            border-bottom: 1px solid #4CF14C;
+        }
+        input{
+            border-radius: 15px;
+            border: none;
+            height: 45px;
+            background: none;
+            background-color: #acdadf;
+        }
+        .home{
+          font-weight: 700;
+          font-size: 25px;
+        }
+        .textsizehandle{
+          font-size: 10px;
+        }
+        a{
+            text-decoration: none;
+            color: #28ABB9;
+        }
+        #buttonsubmit{
+            background: none;
+            border: none;
+        }
+        .userinfo{
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #28ABB9;
+            border-radius: 15px;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            font-size: 25px;
+            max-width: 50vw;
+            height: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .userinfo div{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            padding-left: 15px;
+            padding-right: 15px;
+            border-bottom: 1px solid #28ABB9;
+        }
+        #redirectdiv{
+            margin-left: 0px;
+            margin-right: auto;
+            color: black;
+        }
+    </style>
 </head>
 <body>
-    {{ user.first_name }}
-    {{ user.last_name }}
-    {{ user.username }}
-    {{ user.email }}
-    {{ userpersonal.phone }}
-    {{ userpersonal.city }}
-    {{ userpersonal.state }}
-    {{ userpersonal.country }}
-    {{ userpersonal.address }}
+    <div class="container-navbar">
+        <div class="home">
+          <a id="blog-home" class="navbar-brand" href="{% url 'index' %}">Bloggggggggg</a>
+        </div>
+        <div class="search textsizehandle">
+          <form action="{% url 'search' %}" method="post">
+            {% csrf_token %}
+            <input id="inputsearch" type="text" name="search" placeholder="   Search">
+            <button id="buttonsubmit" type="submit"></button>
+          </form>
+        </div>
+        <div class="profile textsizehandle">
+          <b><h1><a id="about" class="about-class" href="{% url 'personalinfo' %}">Profile</a></h1></b>
+        </div>
+        <div class="about textsizehandle">
+          <b><h1><a id="about" class="about-class" href="{% url 'about' %}">About</a></h1></b>
+        </div>
+        <div class="adding textsizehandle">
+          <b><h2><a href="{% url 'add' %}">Create</a></h2></b>
+        </div>
+        <div class="global textsizehandle">
+            <b><h2><a href="{% url 'globalpage' %}">global forum</a></h2></b>
+        </div>
+        <div class="logout textsizehandle">
+            <b><h2><a href="{% url 'logout' %}">logout</a></h2></b>
+        </div>
+    </div>
+    <div class="userinfo">
+        <div>
+            First name: {{ user.first_name }}
+        </div>
+        <div>
+            Last name: {{ user.last_name }}
+        </div>
+        <div>
+            Username: {{ user.username }}
+        </div>
+        {% if user.email %}
+        <div>
+            Email: Not provided
+        </div>
+        {% else %}
+        <div>
+            Email: {{ user.email }}
+        </div>
+        {% endif %}
+        <div>
+            Phone: {{ userpersonal.phone }}
+        </div>
+        <div>
+            City: {{ userpersonal.city }}
+        </div>
+        <div>
+            State: {{ userpersonal.state }}
+        </div>
+        <div>
+            Country: {{ userpersonal.country }}
+        </div>
+        <div>
+            Address: {{ userpersonal.address }}
+        </div>
+        <div>
+            Number of Posts: <a id="redirectdiv" href="{% url 'dashboard' %}"> {{ numberofposts }}</a>
+        </div>
+        <div class="commentsalldiv">
+            Number of Comments: <a id="redirectdiv" href="{% url 'commentsall' %}" >{{ numberofcomments }}</a>
+        </div>
+        <div>
+            Number of Views: {{ numberoflikes }}
+        </div>
+        <div>
+            Number of Subscriptions: {{ numberofsubscriptions }}
+        </div>
+    </div>
 </body>
 </html>

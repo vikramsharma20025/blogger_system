@@ -7,63 +7,161 @@
     <title>Document</title>
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
     <style>
+        .container-navbar{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #EFFAD3;
+            height: 15vh;
+            padding-left: 15px;
+            padding-right: 15px;
+            color: #28ABB9;
+            border-bottom: 1px solid #4CF14C;
+        }
+        input{
+            border-radius: 15px;
+            border: none;
+            height: 45px;
+            background: none;
+            
+            background-color: #acdadf;
+        }
+        .home{
+          font-weight: 700;
+          font-size: 25px;
+        }
+        .textsizehandle{
+          font-size: 15px;
+        }
+        .welcomeheader{
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+          align-items: center;
+          color: white;
+          height: 25vh;
+          padding-left: 15px;
+          padding-right: 15px;
+          background-color: #28ABB9;
+          border-bottom: 1px solid #4CF14C;
+        }
+        #welcoming{
+          font-size: 24px;
+        }
         .block{
-            max-width: 50%;
-            border: 1px solid black;
-            justify-content: center;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+          align-items: center;
+          color: white;
+          height: auto;
+          font-size: 30px;
+          background-color: #28ABB9;
+          border-bottom: 1px solid #4CF14C;
+          width: 80vw;
+          margin-left: auto;
+          margin-right: auto;
+        }
+        .container-postodd{
+          background-color: white;
+          color: #28ABB9;
+        }
+        .container-posteven{
+          background-color: #28ABB9;
+        }
+        .parent-nav{
             display: flex;
-            flex-direction: column;
-            margin-left: 25%;
-        }
-        .container{
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            border: 1px solid black;
-        }
-        .child-nav{
-            display: none;
-        }
-        .parent-nav:hover .child-nav{
-            display: block;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: center;
+            background-color: #EFFAD3;
+            height: 15vh;
+            padding-left: 15px;
+            padding-right: 15px;
+            color: #28ABB9;
+            border-bottom: 1px solid #4CF14C;
         }
     </style>
     <!-- <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet"> -->
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-    <div class="container solid-1px display-flex flex-row justify-around h-54">
-        <div>
-          <h2><a class="navbar-brand" href="#">Home</a></h2>
+    {% if isloggedin %}
+    <div class="container-navbar">
+        <div class="home">
+          <a id="blog-home" class="navbar-brand" href="{% url 'index' %}">Bloggggggggg</a>
         </div>
+        <div class="search textsizehandle">
+          <form action="{% url 'search' %}" method="post">
+            {% csrf_token %}
+            <input id="inputsearch" type="text" name="search" placeholder="   Search">
+            <button type="submit"></button>
+          </form>
+        </div>
+        <div class="profile textsizehandle">
+          <b><h1><a id="about" class="about-class" href="{% url 'personalinfo' %}">Profile</a></h1></b>
+        </div>
+        <div class="about textsizehandle">
+          <b><h1><a id="about" class="about-class" href="{% url 'about' %}">About</a></h1></b>
+        </div>
+        <div class="adding textsizehandle">
+          <b><h2><a href="{% url 'add' %}">Create</a></h2></b>
+        </div>
+        <div class="global textsizehandle">
+            <b><h2><a href="{% url 'globalpage' %}">global forum</a></h2></b>
+        </div>
+        <div class="logout textsizehandle">
+            <b><h2><a href="{% url 'logout' %}">logout</a></h2></b>
+        </div>
+    </div>
+    {% endif %}
+    <div class="container solid-1px display-flex flex-row justify-around h-54">
+        <!-- <div>
+          <h2><a class="navbar-brand" href="#">Home</a></h2>
+        </div> -->
         <!-- <div>
           <h2><a href="{% url 'add' %}"><img src="https://content.fortune.com/wp-content/uploads/2019/04/brb05.19.plus_.jpg" alt="Add" height="50px" width="50px"></a></h2>
         </div> -->
-        <div>
+        <!-- <div>
             <h2><a href="{% url 'globalpage' %}">global forum</a></h2>
-        </div>
+        </div> -->
         <!-- <br> -->
         <div class="parent-nav">
-          <h2>user : {{ usernameofuser }}</h2>
-          <h2>no of posts : {{ usertotalposts }}</h2>
-          <h2>no of comments on all blogs : {{ totalcomments }}</h2>
-          <h2>no of subscriberss : {{ totalfollowers }}</h2>
-          <form action="{% url 'followuser' username=usernameofuser usernameby=request.user.username %}" method="post">
-            {% csrf_token %}
-            <button type="submit">subscribe</button>
-          </form>
+            <h2>username : {{ usernametofollow }}</h2>
+            <h2>no of posts : {{ usertotalposts }}</h2>
+            <h2>no of comments on all blogs : {{ totalcomments }}</h2>
+            <h2>no of subscriberss : {{ totalfollowers }}</h2>
+            {% if not isloggedin %}
+                <a href="{% url 'login' %}">Login</a>
+            {% else %}
+                <form action="{% url 'followuser' username=usernametofollow usernameby=usernamebyfollow %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Toogle Subscribe</button>
+                </form>
+            {% endif %}
         </div>
       </div>
     <div class="block">
         {% for i in username %}
         <a href="{% url 'showpost' title=i.title %}">
-            <div class="container">
-                <div class="heading">{{ i.username }} {{ i.timeposted }}</div>
-                <div class="content">
-                    <div class="title">{{ i.title }}</div>
-                    <div class="desc">{{ i.desc }}</div>
+            {% if forloop.counter|divisibleby:"2" %}
+                <div class="container-posteven">
+                    <div class="heading">{{ i.username }} {{ i.timeposted }}</div>
+                    <div class="content">
+                        <div class="title">{{ i.title }}</div>
+                        <!-- <div class="desc">{{ i.desc.html|safe }}</div> -->
+                    </div>
                 </div>
-            </div>
+            {% else %}
+                <div class="container-postodd">
+                    <div class="heading">{{ i.username }} {{ i.timeposted }}</div>
+                    <div class="content">
+                        <div class="title">{{ i.title }}</div>
+                        <!-- <div class="desc">{{ i.desc.html|safe }}</div> -->
+                    </div>
+                </div>
+            {% endif %}
         </a>
         {% endfor %}
     </div>

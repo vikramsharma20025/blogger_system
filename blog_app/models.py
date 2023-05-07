@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django_quill.fields import QuillField
 
 # Create your models here.
 class UserAccount(models.Model):
@@ -16,11 +17,10 @@ class Post(models.Model):
     # username = models.OneToOneField(User,on_delete=models.CASCADE)
     username = models.ForeignKey(UserAccount,on_delete=models.CASCADE)
     timeposted = models.TimeField()
-    title = models.CharField(primary_key=True,max_length=50,null=False,default="")
-    desc = models.TextField(null=True)
+    title = models.CharField(primary_key=True,max_length=80,null=False,default="")
+    desc = QuillField(default='ici')
     def __str__(self):
         return self.username.user.username
-    
 # commentnew = Comment.object.create(postedwhere = Post.objects.filter(username = UserAccount.objects.filter(user=User.objects.filter(username='khushi')[0])[0]))
 
 

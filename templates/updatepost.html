@@ -4,11 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New Blog</title>
+    <title>Update post</title>
     <style>
-        body{
-          padding: 0%;
-        }
         .container-navbar{
             display: flex;
             flex-direction: row;
@@ -19,9 +16,6 @@
             padding-left: 15px;
             padding-right: 15px;
             color: #28ABB9;
-            border-left: 1px solid black;
-            border-top: 1px solid black;
-            border-right: 1px solid black;
             border-bottom: 1px solid #4CF14C;
         }
         input{
@@ -60,7 +54,7 @@
           height: max-content;
           width: 70vw;
         }
-        #submitit{
+        #itit{
           margin-top: 15px;
           background: none;
           border: 1px solid #28ABB9;
@@ -70,15 +64,6 @@
           font-size: 20px;
           font-weight: 700;
           color: #28ABB9;
-        }
-        #create-post{
-          margin-top: 15px;
-          margin-bottom: 15px;
-          font-size: 30px;
-          font-weight: 700;
-          color: #28ABB9;
-          margin-left: auto;
-          margin-right: auto;
         }
     </style>
 </head>
@@ -105,8 +90,7 @@
         </div>
     </div>
     <div class="add-post-form">
-      <h1 id="create-post">Create Post</h1>
-        <form action="{% url 'add' %}" method="post">
+        <form action="{% url 'postupdate' %}" method="post">
             {% csrf_token %}
             <div class="form-1">
             {{ form.media }}
@@ -114,7 +98,7 @@
             <div class="form-2">
             {{ form.as_div }}
             </div>
-            <input id="submitit" type="submit" value="Add">
+            <input id="itit" type="submit" value="Add">
         </form>
     </div>
 </body>

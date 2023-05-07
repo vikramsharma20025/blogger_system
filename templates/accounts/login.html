@@ -4,17 +4,98 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Login</title>
+    <style>
+        input{
+            border-radius: 15px;
+            border: none;
+            height: 25px;
+            background: none;
+        }
+        body{
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            padding-top: 15vh;
+            background-color:  #EFFAD3;
+        }
+        .loginform{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border: 1px solid  #4CF14C;
+            -webkit-box-shadow: -3px 0px 43px 0px rgba(0,0,0,0.75);
+            -moz-box-shadow: -3px 0px 43px 0px rgba(0,0,0,0.75);
+            box-shadow: -3px 0px 43px 0px rgba(0,0,0,0.75);
+            border-radius: 15px;
+        }
+        .loginform>form{
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .loginform>div{
+            margin-left: auto;
+            margin-right: auto;
+            width: 425px;
+        }
+        .buttons{
+            display: flex;
+            justify-content: center;
+            height: 50px;
+        }
+        #loginbutton{
+            background: none;
+            background-color: #2D6187;
+            border-radius: 45px;
+            width: 150px;
+            border: none;
+        }
+        .username{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+        }
+        .password{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+        }
+        a{
+            text-decoration: none;
+            color: #28ABB9;
+        }
+        .otheroptions{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+        }
+        .message{
+            display: none;
+        }
+    </style>
 </head>
 <body>
-    <form action="{% url 'login' %}" method="post">
-        {% csrf_token %}
-        <input type="text" name="username" id="username">
-        <input type="password" name="password" id="password">
-        <button type="submit">submit</button>
-    </form>
-    {{ message }}
-    <div><h6><a href="{% url 'changepassword' %}">change password</a></h6></div>
-    <div><h6><a href="{% url 'register' %}">register</a></h6></div>
+    <div class="loginform">
+        <div class="formdiv">
+            <form class="form" action="{% url 'login' %}" method="post">
+                {% csrf_token %}
+                <div class="username">
+                    <h4><label for="username">Enter username: <input type="text" name="username" id="username"></label></h4>
+                </div>
+                <div class="password">
+                    <h4><label for="password">Enter Password: <input type="password" name="password" id="password"></label></h4>
+                </div>
+                <div class="buttons">
+                    <button type="submit" id="loginbutton">Login</button>
+                </div>
+            </form>
+        </div>
+        <div class="otheroptions">
+            <!-- <div class="changepass"><h4><a href="{% url 'changepassword' %}">change password</a></h4></div> -->
+            <div class="register"><h4>new user?<a href="{% url 'register' %}">register</a></h4></div>
+        </div>
+        <div class="message">{{ message }}</div>
+    </div>
 </body>
 </html>

@@ -4,41 +4,108 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Update Profile</title>
+    <style>
+        body{
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            
+            background-color:  #EFFAD3;
+        }
+        input{
+            border-radius: 15px;
+            border: none;
+            height: 25px;
+            background: none;
+            border-bottom: 1px grey solid;
+        }
+        .container{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding-top: 7vh;
+        }
+        .form-values{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid  #4CF14C;
+            -webkit-box-shadow: -3px 0px 43px 0px rgba(0,0,0,0.75);
+            -moz-box-shadow: -3px 0px 43px 0px rgba(0,0,0,0.75);
+            box-shadow: -3px 0px 43px 0px rgba(0,0,0,0.75);
+            border-radius: 15px;
+            height: auto;
+            padding-top: 15px;
+        }
+        .form-values>div{
+            display: flex;
+            border-bottom: gray;
+            flex-direction: row;
+            justify-content: space-between;
+            padding-left: 15px;
+            padding-right: 15px;
+            width: 500px;
+            margin-bottom: 25px;
+        }
+        .submitbutton{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 50px;
+        }
+        #submitit{
+            background: none;
+            background-color: #2D6187;
+            border-radius: 45px;
+            width: 150px;
+            height: 45px;
+            margin-left: auto;
+            margin-right: auto;
+            border: none;
+        }
+        .login-link{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 50px;
+        }
+    </style>
 </head>
 <body>
     <form action="{% url 'updateprofile' %}" method="post">
         {% csrf_token %}
-        <div>
-            <label for="first_name">first name</label>
-            <input type="text" name="fname" id="fname">
-        </div>
-        <div>
-            <label for="last_name">last name</label>
-            <input type="text" name="lname" id="lname">
-        </div>
-        <div>
-            <label for="username">username</label>
-            <input type="text" name="username" id="username">
-        </div>
-        <div>
-            <label for="city">city</label>
-            <input type="text" name="city" id="city">
-        </div>
-        <div>
-            <label for="state">state</label>
-            <input type="text" name="state" id="state">
-        </div>
-        <div>
-            <label for="country">country</label>
-            <input type="text" name="country" id="country">
-        </div>
-        <div>
-            <label for="address">address</label>
-            <input type="text" name="address" id="address">
-        </div>
-        <div>
-            <button type="submit">save</button>
+        <div class="form-values">
+            <div class="firstname">
+                <label for="first_name">first name</label>
+                <input type="text" name="fname" id="fname">
+            </div>
+            <div class="lastname">
+                <label for="last_name">last name</label>
+                <input type="text" name="lname" id="lname">
+            </div>
+            <div class="city">
+                <label for="city">city</label>
+                <input type="text" name="city" id="city">
+            </div>
+            <div class="state">
+                <label for="state">state</label>
+                <input type="text" name="state" id="state">
+            </div>
+            <div>
+                <label for="country">country</label>
+                <input type="text" name="country" id="country">
+            </div>
+            <div>
+                <label for="address">address</label>
+                <input type="text" name="address" id="address">
+            </div>
+            <div class="submitbutton">
+                <button id="submitit" type="submit">save</button>
+            </div>
         </div>
     </form>
 </body>

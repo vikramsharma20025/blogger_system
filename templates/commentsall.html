@@ -6,58 +6,134 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
+
+        .container-navbar{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #EFFAD3;
+            height: 15vh;
+            padding-left: 15px;
+            padding-right: 15px;
+            color: #28ABB9;
+            border-bottom: 1px solid #4CF14C;
+        }
+        input{
+            border-radius: 15px;
+            border: none;
+            height: 45px;
+            background: none;
+            
+            background-color: #acdadf;
+        }
+        .home{
+          font-weight: 700;
+          font-size: 25px;
+        }
+        .textsizehandle{
+          font-size: 15px;
+        }
+        
         .block{
-            max-width: 50%;
-            border: 1px solid black;
-            justify-content: center;
-            display: flex;
-            flex-direction: column;
-            margin-left: 25%;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+          align-items: center;
+          color: white;
+          height: auto;
+          font-size: 30px;
+          background-color: #28ABB9;
+          border-bottom: 1px solid #4CF14C;
+          width: 80vw;
+          margin-left: auto;
+          margin-right: auto;
         }
-        .container{
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            border: 1px solid black;
+        .container-postodd{
+          background-color: white;
+          color: #28ABB9;
         }
-        .child-nav{
-            display: none;
+        .container-posteven{
+          background-color: #28ABB9;
         }
-        .parent-nav:hover .child-nav{
-            display: block;
-        }
+        
     </style>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <div class="container solid-1px display-flex flex-row justify-around h-24">
-        <div>
-          <h3><a class="navbar-brand" href="#">Home</a></h3>
-        </div>
-        <div>
-          <h3><a href="{% url 'dashboard' %}">dashboard</a></h3>
-        </div>
-        <div>
-            <h3><a href="{% url 'globalpage' %}">global forum</a></h3>
-        </div>
-        <div class="parent-nav">
-          <h3>{{ usernameofuser }}</h2>
-          <div class="child-nav">
-            <h3><a href="{% url 'logout' %}">logout</a></h3>
-          </div>
-        </div>
-      </div>
+<body><div class="container-navbar">
+    <div class="home">
+      <a id="blog-home" class="navbar-brand" href="{% url 'index' %}">Bloggggggggg</a>
+    </div>
+    <div class="search textsizehandle">
+      <form action="{% url 'search' %}" method="post">
+        {% csrf_token %}
+        <input id="inputsearch" type="text" name="search" placeholder="   Search">
+        <button type="submit"></button>
+      </form>
+    </div>
+    <div class="profile textsizehandle">
+      <b><h1><a id="about" class="about-class" href="{% url 'personalinfo' %}">Profile</a></h1></b>
+    </div>
+    <div class="about textsizehandle">
+      <b><h1><a id="about" class="about-class" href="{% url 'about' %}">About</a></h1></b>
+    </div>
+    <div class="adding textsizehandle">
+      <b><h2><a href="{% url 'add' %}">Create</a></h2></b>
+    </div>
+    <div class="global textsizehandle">
+        <b><h2><a href="{% url 'globalpage' %}">global forum</a></h2></b>
+    </div>
+    <div class="logout textsizehandle">
+        <b><h2><a href="{% url 'logout' %}">logout</a></h2></b>
+    </div>
+</div>
       <br>
-    <div class="block">
+      <div class="block">
         {% for i in comments %}
-        <div class="container">
+          {% if forloop.counter|divisibleby:"2" %}
+          <div class="container-posteven">
+            <a href="{% url 'showthiscomment' title=i.postedwhere.title id=i.id %}">
             <div class="heading">{{ i.userwhoposted.user.username }} {{ i.timeposted }}</div>
             <div class="content">
                 <!-- <div class="title">{{ i.title }}</div> -->
                 <div class="desc">{{ i.content }}</div>
             </div>
+            </a>
         </div>
+          {% else %}
+          <div class="container-postodd">
+            <a href="{% url 'showthiscomment' title=i.postedwhere.title id=i.id %}">
+            <div class="heading">{{ i.userwhoposted.user.username }} {{ i.timeposted }}</div>
+            <div class="content">
+                <!-- <div class="title">{{ i.title }}</div> -->
+                <div class="desc">{{ i.content }}</div>
+            </div>
+            </a>
+        </div>
+          {% endif %}
+        </a>
         {% endfor %}
     </div>
+    
 </body>
 </html>
+<!-- .block{
+    max-width: 50%;
+    border: 1px solid black;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    margin-left: 25%;
+}
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 1px solid black;
+}
+.child-nav{
+    display: none;
+}
+.parent-nav:hover .child-nav{
+    display: block;
+} -->
