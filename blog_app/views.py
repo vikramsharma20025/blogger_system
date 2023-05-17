@@ -1,7 +1,7 @@
 from django.shortcuts import render,HttpResponse, redirect
 from django.contrib import auth
 from django.contrib.auth.models import User
-from .models import UserAccount,Post,OTPStorage,Comment,Reply,Following
+from .models import UserAccount,Post,OTPStorage,Comment,Reply,Following,Views
 from django.contrib.auth.decorators import login_required
 import datetime
 # import smtplib
@@ -38,12 +38,21 @@ def index(request):
 
 @login_required
 def add(request):
-    form = PostForm(request.POST)
+    form = PostForm(request.POST,request.FILES)
     if form.is_valid():
+        # form.save()
+        # return redirect('/dashboard')
         title = form.cleaned_data['title']
-        desc = form.cleaned_data['body']
+        blogbg = form.cleaned_data['blogbg']
+        desc = form.cleaned_data['desc']
+        if title == None:
+            return render(request,'add.html',context={'form':form})
+        if blogbg == None:
+            return render(request,'add.html',context={'form':form})
+        if desc == None:
+            return render(request,'add.html',context={'form':form})    
         user = UserAccount.objects.filter(user=request.user)[0]
-        post = Post.objects.create(username=user,timeposted=datetime.datetime.now(),title=title,desc=desc)
+        post = Post.objects.create(username=user,blogbg=blogbg,timeposted=datetime.datetime.now(),title=title,desc=desc)
         post.save()
         return redirect('/dashboard')
     else:
@@ -158,6 +167,7 @@ def showuser(request,username):
             break
     if request.user.is_authenticated:
         isloggedin = True
+    
     context = {
         'usertotalposts':len(posts),
         'totalcomments':len(comments),
@@ -195,6 +205,15 @@ def showpost(request,title):
     # user = User.objects.filter(id=request.user.id)[0]
     # username = UserAccount.objects.filter(user=user)[0]
     posts = Post.objects.filter(title=title)
+    # try:
+    view = Views.objects.filter(postwhich=posts[0])
+    # if view == None:
+    #     view = Views.objects.create(postwhich = posts[0])
+    #     # view.views = view.views+1
+    # else:
+    #     view[0].views = view[0].views + 1
+    # # except:
+        
     if len(posts) == 0:
         return HttpResponse("<div>post not found <a href='/dashboard'>go back</a></div>")
     comments = Comment.objects.filter(postedwhere=Post.objects.filter(title=title)[0])
@@ -211,6 +230,7 @@ def showpost(request,title):
     context = {
         # 'username':user.username,
         'post':posts[0].title,
+        'bgurl':posts[0],
         'content':posts[0].desc.html,
         'timeposted':posts[0].timeposted,
         'comments':comments,
@@ -349,7 +369,17 @@ def personalinfo(request):
     # nooflikes = Like.objects.count().filter(username=userpersonal)
     # noofdislikes = Dislike.objects.count().filter(username=userpersonal)
     noofsubscription = Following.objects.filter(userfollowed=user).count()
+    posts = Post.objects.filter(username=userpersonal)
+    viewcount = 0
+    for p in posts:
+        views = Views.objects.filter(postwhich = p)
+        # if len(views>0):
+        try:
+            viewcount += views[0].views
+        except:
+            viewcount = viewcount
     context = {
+        'views':viewcount,
         'user':user,
         'userpersonal':userpersonal,
         'numberofposts':noofposts,

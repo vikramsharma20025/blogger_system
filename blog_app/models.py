@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django_quill.fields import QuillField
+import datetime
 
 # Create your models here.
 class UserAccount(models.Model):
@@ -16,13 +17,18 @@ class UserAccount(models.Model):
 class Post(models.Model):
     # username = models.OneToOneField(User,on_delete=models.CASCADE)
     username = models.ForeignKey(UserAccount,on_delete=models.CASCADE)
-    timeposted = models.TimeField()
+    timeposted = models.TimeField(default=datetime.datetime.now,blank=True)
     title = models.CharField(primary_key=True,max_length=80,null=False,default="")
+    blogbg = models.ImageField(upload_to='images',default=None)
     desc = QuillField(default='ici')
     def __str__(self):
         return self.username.user.username
 # commentnew = Comment.object.create(postedwhere = Post.objects.filter(username = UserAccount.objects.filter(user=User.objects.filter(username='khushi')[0])[0]))
-
+class Views(models.Model):
+    postwhich = models.ForeignKey(Post,on_delete=models.CASCADE)
+    views = models.IntegerField(default=1)
+    def __str__(self):
+        return self.postwhich.title
 
 class Comment(models.Model):
     postedwhere = models.ForeignKey(Post,on_delete=models.CASCADE)
