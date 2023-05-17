@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,8 +7,64 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        
+        body{
+            background-color: #EFFAD3;
+            background-image: url('https://media.istockphoto.com/id/1395839130/photo/website-and-internet-contact-us-page-concept-with-phone-chat-email-mail-icons-symbol.jpg?s=612x612&w=0&k=20&c=NSgqVKI3VYf_tMsGBTQV4jJfqBswYiF0qW5okZIsGxA=');
+            background-repeat: no-repeat;
+            background-size: 100vw 100vh;
+            display: flex;
+            flex-direction: row;
+        }
+        .global{
+            font-size: 25px;
+            font-weight: 700;
+            width: 35vw;
+        }
+        a{
+            text-decoration: none;
+            color: black;
+        }
+        .images-info{
+            display: flex;
+            flex-direction: column;
+        }
+        
+        img{
+            height: 130px;
+            width: 130px;
+        }
+        .About{
+            display: flex;
+            flex-direction: row;
+            margin-left: auto;
+        }
+        
+    </style>
 </head>
 <body>
-    This page is to show about us
+    <div class="global">
+        
+        <a href="{% url 'globalpage' %}">Global forum</a>
+    </div>
+    <div class="images-info">
+        <div class="About">
+            <p>Detail-oriented problem-solver, skilled in optimizing code. Strong communicator and leader, adaptable to new technologies. Dedicated and continuously learning, poised for impactful contributions in software engineering.</p>
+            <img src="/media/aboutphotos/WhatsApp Image 2023-05-17 at 11.36.52.jpeg" alt="" srcset="" />
+        </div>
+        <div class="About">
+            <p>Creative thinker, adept at designing intuitive user interfaces. Collaborative and adaptable to changing requirements. Motivated and quick learner, poised to excel in software engineering.</p>
+            <img src="/media/aboutphotos/WhatsApp Image 2023-05-17 at 11.44.29.jpeg" alt="" srcset="" />
+        </div>
+        <div class="About">
+            <p>Methodical and precise programmer, excelling in algorithm development. Strong problem-solving skills and quick to grasp new concepts. Detail-oriented and determined, destined for success in software engineering.</p>
+            <img src="/media/aboutphotos/WhatsApp Image 2023-05-17 at 11.49.53.jpeg" alt="">
+        </div>
+        <div class="About">
+            <p>Versatile and adaptable coder, skilled in multiple programming languages. Excellent team player and communicator. Eager learner and passionate about software engineering, ready to tackle complex projects.</p>
+            <img src="/media/aboutphotos/WhatsApp Image 2023-05-17 at 14.58.28.jpeg" alt="">
+        </div>
+    </div>
 </body>
 </html>

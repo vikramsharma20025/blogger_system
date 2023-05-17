@@ -50,25 +50,38 @@
           font-size: 24px;
         }
         .block{
+          width: 100%;
+          height: 100%;
+        }
+        .blockinsider{
           display: flex;
-          flex-direction: column;
-          justify-content: space-around;
-          align-items: center;
-          color: white;
-          height: auto;
+          justify-content: space-evenly;
+          padding: 0px;
+          width: 100%;
+          flex-flow: row wrap;
           font-size: 30px;
-          background-color: #28ABB9;
-          border-bottom: 1px solid #4CF14C;
-          width: 80vw;
-          margin-left: auto;
-          margin-right: auto;
         }
         .container-postodd{
           background-color: white;
           color: #28ABB9;
+          width: 30vw;
+          height: 35vh;
         }
         .container-posteven{
           background-color: #28ABB9;
+          width: 30vw;
+          height: 35vh;
+        }
+        .bgimage-posts{
+          height: 35vh;
+          width: 30vw;
+        }
+        .bgimage-posts>img{
+          height: 100%;
+          width: 100%;
+        }
+        .contain-it{
+          margin-bottom: 15px;
         }
     </style>
     <!-- <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet"> -->
@@ -106,10 +119,20 @@
         <h1 id="welcoming">Welcome {{ request.user.username }}</h1>
         <h3>Share your knowledge and thoughts with us  😃</h3>
     </div>
-    <div class="block">
+    <div class="block" style="display: flexbox; flex-direction:row; flex-wrap:wrap;">
+      <div class="blockinsider" style="width: 100%; padding: 15px;">
         {% for i in username %}
         <a href="{% url 'showpost' title=i.title %}">
           {% if forloop.counter|divisibleby:"2" %}
+          <div class="contain-it">
+            <div class="bgimage-posts">
+              {% if i.blogbg %}
+              
+              <img src="{{ i.blogbg.url }}" alt="user" />
+              {% else %}
+              <img src="https://img.freepik.com/free-photo/overhead-view-coffee-cup-keyboard-camera-paper-white-background_23-2148042112.jpg" alt="default" />  
+              {% endif %}
+            </div>
             <div class="container-posteven">
                 <div class="heading">{{ i.username }} {{ i.timeposted }}</div>
                 <div class="content">
@@ -117,16 +140,27 @@
                     
                 </div>
             </div>
+          </div>
           {% else %}
+          <div class="contain-it">
+            <div class="bgimage-posts">
+              {% if i.blogbg %}
+                <img src="{{ i.blogbg.url }}" alt="user" />
+              {% else %}
+                <img src="https://img.freepik.com/free-photo/overhead-view-coffee-cup-keyboard-camera-paper-white-background_23-2148042112.jpg" alt="default" />
+              {% endif %}
+            </div>
             <div class="container-postodd">
                 <div class="heading">{{ i.username }} {{ i.timeposted }}</div>
                 <div class="content">
                     <div class="title">{{ i.title }}</div>
                 </div>
             </div>
+          </div>
           {% endif %}
         </a>
         {% endfor %}
+      </div>
     </div>
 </body>
 </html>
